@@ -1,0 +1,45 @@
+{
+  "name": "json-2-md",
+  "version": "0.0.1",
+  "description": "Utility to convert json to markdown using a json schema description",
+  "keywords": [
+    "json",
+    "markdown",
+    "json",
+    "schema",
+    "utility",
+    "apache",
+    "2"
+  ],
+  "homepage": "https://github.com/eetr-ai/json-2-md#readme",
+  "bugs": {
+    "url": "https://github.com/eetr-ai/json-2-md/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eetr-ai/json-2-md.git"
+  },
+  "license": "Apache-2.0",
+  "author": "Juan Alberto Lopez Cavallotti",
+  "type": "commonjs",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs",
+      "default": "./dist/index.mjs"
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest"
+  },
+  "devDependencies": {
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2"
+  }
+}
