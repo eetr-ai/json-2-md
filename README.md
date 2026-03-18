@@ -187,6 +187,16 @@ For validation and description lookup without generating markdown: `new SchemaPr
 
 `keyToDescription(key)` turns a key into a readable label (e.g. camelCase or snake_case). Also exported: `detectCase`, `camelCaseToDescription`, `snakeCaseToDescription`.
 
+## Playground
+
+A Vite app in [`playground/`](playground/) is **not** part of the npm package (`files` only includes `dist/`).
+
+1. Install once: `cd playground && npm install`
+2. **Dev (library source)** — from repo root: `npm run playground:dev`, or from `playground/`: `npm run dev`. Edits under `src/` are picked up without rebuilding the package (Vite resolves `@eetr/json-2-md` to [`src/index.ts`](src/index.ts)).
+3. **Dev (built package)** — run `npm run build` at the repo root, then `npm run playground:dev:pkg` (or `npm run dev:pkg` inside `playground/`). Uses the same entry as consumers (`dist/`).
+
+Static build of the demo: `npm run playground:build` (output: `playground/dist/`).
+
 ## License
 
 Apache-2.0

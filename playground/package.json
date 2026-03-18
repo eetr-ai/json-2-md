@@ -1,0 +1,20 @@
+{
+  "name": "json-2-md-playground",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "dev:pkg": "VITE_USE_PKG=1 vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@eetr/json-2-md": "file:.."
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.2.2",
+    "tailwindcss": "^4.2.2",
+    "typescript": "~5.7.2",
+    "vite": "^6.0.0"
+  }
+}

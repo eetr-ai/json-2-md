@@ -36,7 +36,11 @@
   "files": ["dist"],
   "scripts": {
     "build": "tsup",
-    "test": "vitest"
+    "test": "vitest",
+    "playground:dev": "npm run dev --prefix playground",
+    "playground:dev:pkg": "npm run dev:pkg --prefix playground",
+    "playground:build": "npm run build --prefix playground",
+    "playground:preview": "npm run preview --prefix playground"
   },
   "devDependencies": {
     "tsup": "^8.3.5",
