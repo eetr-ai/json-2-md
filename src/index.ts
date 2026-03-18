@@ -17,5 +17,5 @@ export {
 } from "./markdown";
 export type { ObjectToMdOptions, KeyCase } from "./markdown";
 
-export { SchemaProcessor } from "./schema";
+export { loadSchema, SchemaProcessor } from "./schema";
 export type { ProcessResult, SchemaObject } from "./schema";

@@ -168,17 +168,18 @@ function renderBullets(
 /**
  * Converts an object to markdown using the given schema for validation and descriptions.
  * @param object - The object to convert (must validate against schema).
- * @param schema - JSON Schema object or string (same as SchemaProcessor).
+ * @param schema - JSON Schema object or string, or a SchemaProcessor from loadSchema.
  * @param options - Optional settings (includeOriginal, fieldCopy, docTitle, labelFromPath, formatStrategy).
  * @returns Markdown string.
  * @throws Error if the object does not validate against the schema.
  */
 export function objectToMd(
   object: unknown,
-  schema: SchemaObject | string,
+  schema: SchemaObject | string | SchemaProcessor,
   options?: ObjectToMdOptions
 ): string {
-  const processor = new SchemaProcessor(schema);
+  const processor =
+    schema instanceof SchemaProcessor ? schema : new SchemaProcessor(schema);
   const result = processor.process(object);
 
   if (!result.valid) {

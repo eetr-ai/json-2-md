@@ -1,4 +1,5 @@
 import { describe, it, expect } from "vitest";
+import { loadSchema } from "../schema/loadSchema";
 import { objectToMd } from "./objectToMd";
 
 const schemaWithRootDesc = {
@@ -172,5 +173,17 @@ describe("objectToMd", () => {
     );
     expect(md).toContain("# User profile");
     expect(md).toContain("User name: Bob");
+  });
+
+  it("accepts loadSchema() result; output matches raw schema", () => {
+    const processor = loadSchema(schemaWithRootDesc);
+    const direct = objectToMd({ name: "Alice" }, schemaWithRootDesc);
+    const viaLoaded = objectToMd({ name: "Alice" }, processor);
+    expect(viaLoaded).toBe(direct);
+  });
+
+  it("throws when object invalid against loaded schema", () => {
+    const processor = loadSchema(schemaWithRootDesc);
+    expect(() => objectToMd({}, processor)).toThrow(/missing required/);
   });
 });

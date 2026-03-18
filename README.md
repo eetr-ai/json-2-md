@@ -32,6 +32,21 @@ const md = objectToMd(data, schema);
 console.log(md);
 ```
 
+### Reusing a loaded schema
+
+If you call `objectToMd` many times with the same schema, load it once with `loadSchema` and pass the result as the second argument. That skips re-parsing, `$ref` resolution, and schema constraint checks on every call (validation still runs per object).
+
+```javascript
+import { objectToMd, loadSchema } from "@eetr/json-2-md";
+
+const processor = loadSchema(schema);
+for (const row of rows) {
+  console.log(objectToMd(row, processor));
+}
+```
+
+You can also use `new SchemaProcessor(schema)` the same way.
+
 Output:
 
 ```markdown
