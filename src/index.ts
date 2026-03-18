@@ -7,3 +7,6 @@ export function jsonToMd(_json: unknown, _schema?: unknown): string {
   // Placeholder: implement conversion logic here
   return "";
 }
+
+export { SchemaProcessor } from "./schema";
+export type { ProcessResult, SchemaObject } from "./schema";
