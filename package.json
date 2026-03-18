@@ -1,5 +1,5 @@
 {
-  "name": "json-2-md",
+  "name": "@eetr/json-2-md",
   "version": "0.0.1",
   "description": "Utility to convert json to markdown using a json schema description",
   "keywords": [
