@@ -8,5 +8,14 @@ export function jsonToMd(_json: unknown, _schema?: unknown): string {
   return "";
 }
 
+export { objectToMd } from "./markdown";
+export {
+  detectCase,
+  camelCaseToDescription,
+  snakeCaseToDescription,
+  keyToDescription,
+} from "./markdown";
+export type { ObjectToMdOptions, KeyCase } from "./markdown";
+
 export { SchemaProcessor } from "./schema";
 export type { ProcessResult, SchemaObject } from "./schema";
