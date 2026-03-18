@@ -197,6 +197,15 @@ A Vite app in [`playground/`](playground/) is **not** part of the npm package (`
 
 Static build of the demo: `npm run playground:build` (output: `playground/dist/`).
 
+## Publishing (maintainers)
+
+You need publish rights on the npm org **@eetr**. From the repo root:
+
+1. `npm login`
+2. `npm publish` — runs `prepublishOnly` (build + `vitest run`), then uploads the tarball.
+
+`publishConfig.access` is `public` so the scoped package is free to install. Bump with `npm version patch|minor|major` before a new release.
+
 ## License
 
 Apache-2.0

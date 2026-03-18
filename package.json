@@ -21,6 +21,10 @@
   },
   "license": "Apache-2.0",
   "author": "Juan Alberto Lopez Cavallotti",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "type": "commonjs",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
@@ -37,6 +41,8 @@
   "scripts": {
     "build": "tsup",
     "test": "vitest",
+    "test:ci": "vitest run",
+    "prepublishOnly": "npm run build && npm run test:ci",
     "playground:dev": "npm run dev --prefix playground",
     "playground:dev:pkg": "npm run dev:pkg --prefix playground",
     "playground:build": "npm run build --prefix playground",
