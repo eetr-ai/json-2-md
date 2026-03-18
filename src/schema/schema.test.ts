@@ -178,4 +178,99 @@ describe("SchemaProcessor", () => {
     } as const;
     expect(() => new SchemaProcessor(schema)).toThrow(/additionalProperties must be false/);
   });
+
+  describe("describe()", () => {
+    it("returns top-level description when called with no arg or empty string", () => {
+      const schema = {
+        type: "object",
+        description: "Root object description",
+        properties: { name: { type: "string" } },
+        additionalProperties: false,
+      } as const;
+      const processor = new SchemaProcessor(schema);
+      expect(processor.describe()).toBe("Root object description");
+      expect(processor.describe("")).toBe("Root object description");
+    });
+
+    it("returns undefined for top-level when schema has no root description", () => {
+      const schema = {
+        type: "object",
+        properties: { name: { type: "string" } },
+        additionalProperties: false,
+      } as const;
+      const processor = new SchemaProcessor(schema);
+      expect(processor.describe()).toBeUndefined();
+      expect(processor.describe("")).toBeUndefined();
+    });
+
+    it("returns field description for dot-separated path", () => {
+      const schema = {
+        type: "object",
+        properties: {
+          name: { type: "string", description: "User name" },
+          address: {
+            type: "object",
+            properties: {
+              street: { type: "string", description: "Street" },
+            },
+            additionalProperties: false,
+          },
+        },
+        additionalProperties: false,
+      } as const;
+      const processor = new SchemaProcessor(schema);
+      expect(processor.describe("name")).toBe("User name");
+      expect(processor.describe("address.street")).toBe("Street");
+    });
+
+    it("returns undefined for nonexistent or partial path", () => {
+      const schema = {
+        type: "object",
+        properties: {
+          name: { type: "string", description: "User name" },
+        },
+        additionalProperties: false,
+      } as const;
+      const processor = new SchemaProcessor(schema);
+      expect(processor.describe("nonexistent")).toBeUndefined();
+      expect(processor.describe("name.missing")).toBeUndefined();
+      expect(processor.describe("a.b.c")).toBeUndefined();
+    });
+
+    it("returns array items description for path ending with []", () => {
+      const schema = {
+        type: "object",
+        properties: {
+          tags: {
+            type: "array",
+            items: { type: "string", description: "List item" },
+          },
+        },
+        additionalProperties: false,
+      } as const;
+      const processor = new SchemaProcessor(schema);
+      expect(processor.describe("tags[]")).toBe("List item");
+    });
+
+    it("returns nested field description under array items for path like a[].b", () => {
+      const schema = {
+        type: "object",
+        properties: {
+          items: {
+            type: "array",
+            items: {
+              type: "object",
+              properties: {
+                name: { type: "string", description: "Item name" },
+              },
+              additionalProperties: false,
+            },
+          },
+        },
+        additionalProperties: false,
+      } as const;
+      const processor = new SchemaProcessor(schema);
+      expect(processor.describe("items[].name")).toBe("Item name");
+    });
+  });
 });

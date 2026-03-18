@@ -37,4 +37,39 @@ export class SchemaProcessor {
   process(json: unknown): ProcessResult {
     return processWithResolvedSchema(json, this.resolvedSchema);
   }
+
+  /**
+   * Returns the schema description at the given path.
+   * - No argument or "" returns the top-level object description.
+   * - Dot-separated path (e.g. "address.street") returns that property's description.
+   * - Segment ending with "[]" (e.g. "tags[]") means the array items schema.
+   */
+  describe(path?: string): string | undefined {
+    if (path === undefined || path === "") {
+      return this.resolvedSchema.description;
+    }
+    const schema = this.getSchemaAtPath(path);
+    return schema?.description;
+  }
+
+  private getSchemaAtPath(path: string): ResolvedSchema | undefined {
+    if (path === "") return this.resolvedSchema;
+    const segments = path.split(".");
+    let current: ResolvedSchema = this.resolvedSchema;
+    for (const segment of segments) {
+      if (segment.endsWith("[]")) {
+        const propName = segment.slice(0, -2);
+        const props = current.properties;
+        if (!props || !(propName in props)) return undefined;
+        const next = props[propName];
+        if (!next.items) return undefined;
+        current = next.items;
+      } else {
+        const props = current.properties;
+        if (!props || !(segment in props)) return undefined;
+        current = props[segment];
+      }
+    }
+    return current;
+  }
 }
